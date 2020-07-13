@@ -1,7 +1,7 @@
 import React from "react";
 
-const NavbarMenu = () => {
+const LoginPage = () => {
   return <div></div>;
 };
 
-export default NavbarMenu;
+export default LoginPage;

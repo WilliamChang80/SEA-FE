@@ -1,5 +1,5 @@
 import { createGlobalStyle } from "styled-components";
-import App from "Config/App";
+import App from "config/App";
 
 const { appUrl } = App;
 
@@ -14,5 +14,13 @@ export const GlobalStyle = createGlobalStyle`
 }
 body {
   font-family: "Roboto";
+  background-color: #232324;
+  color: white;
+  font-size: 1.2rem;
+}
+
+* {
+  margin: 0;
+  padding: 0;
 }
 `;

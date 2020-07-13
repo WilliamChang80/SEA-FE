@@ -1,6 +1,6 @@
 import React from "react";
 import { Switch } from "react-router-dom";
-import Navbar from "Components/Navbar/Navbar";
+import Navbar from "components/navbar";
 
 const MainPage = () => {
   return (
