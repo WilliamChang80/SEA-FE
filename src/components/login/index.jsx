@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import axios from "axios";
 
 import { LoginFormContainer, Input, Button, Form } from "./style";
+import { loginUrl } from "config/Url";
 
 const LoginForm = () => {
   const [passwordShown, setPasswordShown] = useState(false);
@@ -10,7 +12,12 @@ const LoginForm = () => {
     setPasswordShown(!passwordShown);
   };
   const { register, handleSubmit, errors } = useForm();
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => {
+    axios
+      .post(loginUrl, data)
+      .then((res) => console.log(res))
+      .catch((e) => console.log(e));
+  };
   return (
     <LoginFormContainer>
       <div className="bg-container">
@@ -23,7 +30,7 @@ const LoginForm = () => {
                 type="text"
                 placeholder="Enter Your Username"
                 className="form-username"
-                name="username"
+                name="userName"
                 ref={register({ required: true })}
               />
             </div>

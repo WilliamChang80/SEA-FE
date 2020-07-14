@@ -1,5 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import axios from "axios";
 
 import { RegisterFormContainer } from "./style";
 import {
@@ -8,10 +9,17 @@ import {
   LoginFormContainer,
   Form
 } from "components/login/style";
+import { registerUrl } from "config/Url";
 
 const RegisterForm = () => {
   const { register, handleSubmit, errors, getValues } = useForm();
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => {
+    axios
+      .post(registerUrl, data)
+      .then((res) => console.log(res))
+      .catch((e) => console.log(e));
+  };
+
   return (
     <RegisterFormContainer>
       <LoginFormContainer>
@@ -24,7 +32,7 @@ const RegisterForm = () => {
                 type="text"
                 placeholder="Enter Your Username"
                 className="form-username"
-                name="username"
+                name="userName"
                 ref={register({ required: true })}
               />
               {errors.username && (
