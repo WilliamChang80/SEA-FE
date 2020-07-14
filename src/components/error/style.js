@@ -8,10 +8,10 @@ export const ErrorPageContainer = styled.div`
     margin-top: -150px;
   }
   .image-bg {
-    padding-top: 150px;
+    padding-top: 200px;
     background-image: url(${`${appUrl}/Images/ErrorPage.jpg`});
     width: 100vw;
-    height: 100vh;
+    height: 119vh;
     background-size: cover;
     background-repeat: no-repeat;
     display: flex;
@@ -37,14 +37,24 @@ export const ErrorPageContainer = styled.div`
   .error-container {
     display: flex;
     justify-content: center;
+    margin: 4rem 0;
   }
-  .error-button {
-    display: flex;
-    width: 30rem;
-    height: 30rem;
+`;
+
+export const Button = styled.button`
+  font-family: "Montserrat";
+  margin: 10px;
+  border-radius: 1.3rem;
+  border: none;
+  font-weight: bold;
+  padding: 0.2rem 2rem;
+  font-size: 3rem;
+  color: white;
+  background-color: #08cf90;
+  :hover {
+    opacity: 0.9;
   }
-  .error-button:hover {
-    transform: scale(1.3);
-    cursor: pointer;
+  :focus {
+    outline: none;
   }
 `;

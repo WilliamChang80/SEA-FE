@@ -1,8 +1,6 @@
 import React from "react";
-import { ErrorPageContainer } from "components/error/style";
-import App from "config/App";
+import { ErrorPageContainer, Button } from "components/error/style";
 
-const { appUrl } = App;
 const ErrorPage = ({ status, message }) => {
   return (
     <ErrorPageContainer>
@@ -11,10 +9,7 @@ const ErrorPage = ({ status, message }) => {
           <div className="error-code">{status}</div>
           <div className="error-message">{message}</div>
           <div className="error-container">
-            <img
-              className="error-button"
-              src={`${appUrl}/Images/Rocket.png`}
-            ></img>
+            <Button>Back to home</Button>
           </div>
         </div>
       </div>
