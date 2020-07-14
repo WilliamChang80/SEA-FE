@@ -3,6 +3,7 @@ import React from "react";
 import { GlobalStyle } from "styles/globalStyle";
 import LoginPage from "pages/LoginPage";
 import ErrorPage from "pages/ErrorPage";
+import RegisterForm from "components/register";
 import { Route, BrowserRouter, Switch } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -16,6 +17,7 @@ function App() {
       <BrowserRouter>
         <Switch>
           <Route exact path="/login" component={LoginPage} />
+          <Route exact path="/register" component={RegisterForm} />
           <Route
             path="*"
             render={() => (

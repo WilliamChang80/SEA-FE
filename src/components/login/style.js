@@ -23,6 +23,7 @@ export const LoginFormContainer = styled.div`
     font-size: 1.7rem;
     color: grey;
     font-weight: bold;
+    text-align: center;
   }
   .bg-container {
     display: flex;
@@ -49,6 +50,9 @@ export const LoginFormContainer = styled.div`
     font-size: 1rem;
     color: black;
     font-family: "Montserrat";
+  }
+  .error-message {
+    color: red;
   }
 `;
 
@@ -81,4 +85,10 @@ export const Button = styled.button`
   :focus {
     outline: none;
   }
+`;
+
+export const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `;
