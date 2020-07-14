@@ -12,13 +12,14 @@ function App() {
       <GlobalStyle />
       <BrowserRouter>
         <Route exact path="/login" component={LoginPage} />
-        <Route exact path="/" component={MainPage} />
         <Route
           path="*"
           render={() => (
             <ErrorPage
               status={404}
-              message={"Whoops, looks like you get in wrong page"}
+              message={
+                "Whoops, looks like you get in the wrong page. Click the rocket to back to home"
+              }
             />
           )}
         />

@@ -12,8 +12,8 @@ const Navbar = () => {
   return (
     <NavbarContainer>
       <div className="nav-container">
-        {contentList.map((content) => (
-          <NavbarMenu name={content.name} url={content.url} />
+        {contentList.map((content, index) => (
+          <NavbarMenu name={content.name} url={content.url} key={index} />
         ))}
       </div>
     </NavbarContainer>

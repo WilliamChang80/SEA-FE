@@ -1,5 +1,4 @@
 import React from "react";
-import { Switch } from "react-router-dom";
 import Navbar from "components/navbar";
 
 const MainPage = () => {
