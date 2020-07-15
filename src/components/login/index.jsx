@@ -1,21 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useHistory } from "react-router-dom";
 
 import { LoginFormContainer, Input, Button, Form } from "./style";
 import { loginUrl } from "config/Url";
 
 const LoginForm = () => {
   const [passwordShown, setPasswordShown] = useState(false);
-  const history = useHistory();
-
-  useEffect(() => {
-    const { state } = history.location;
-    !!state?.message && toast.success(state.message);
-    !!state && history.replace({ ...history.location, state: null });
-  });
 
   const togglePassword = () => {
     setPasswordShown(!passwordShown);

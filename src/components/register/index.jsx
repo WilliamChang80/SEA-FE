@@ -16,12 +16,16 @@ import { registerUrl } from "config/Url";
 const RegisterForm = () => {
   const { register, handleSubmit, errors, getValues, reset } = useForm();
   const history = useHistory();
+  const redirectUrl = (message) => {
+    toast.success(message);
+    history.push("/login");
+  };
   const onSubmit = (data) => {
     axios
       .post(registerUrl, data)
       .then((res) =>
         res.data.code === 200
-          ? history.push("/login", { message: "Success Added User" })
+          ? redirectUrl(res.data.message)
           : toast.error(res.data.message)
       )
       .catch((e) => toast.error(e));
