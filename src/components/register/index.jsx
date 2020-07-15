@@ -1,6 +1,8 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import { toast } from "react-toastify";
+import { useHistory } from "react-router-dom";
 
 import { RegisterFormContainer } from "./style";
 import {
@@ -12,12 +14,18 @@ import {
 import { registerUrl } from "config/Url";
 
 const RegisterForm = () => {
-  const { register, handleSubmit, errors, getValues } = useForm();
+  const { register, handleSubmit, errors, getValues, reset } = useForm();
+  const history = useHistory();
   const onSubmit = (data) => {
     axios
       .post(registerUrl, data)
-      .then((res) => console.log(res))
-      .catch((e) => console.log(e));
+      .then((res) =>
+        res.data.code === 200
+          ? history.push("/login", { message: "Success Added User" })
+          : toast.error(res.data.message)
+      )
+      .catch((e) => toast.error(e));
+    reset();
   };
 
   return (
