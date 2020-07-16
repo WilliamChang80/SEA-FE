@@ -84,7 +84,10 @@ const RegisterForm = () => {
               <Button type="submit">Submit</Button>
             </Form>
             <div className="card-submenu">
-              Already having account? Sign in <a href="/login">here</a>
+              Already having account? Sign in{" "}
+              <span className="redirect" onClick={() => history.push("/login")}>
+                here
+              </span>
             </div>
           </div>
         </div>

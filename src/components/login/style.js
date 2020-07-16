@@ -54,6 +54,14 @@ export const LoginFormContainer = styled.div`
   .error-message {
     color: red;
   }
+
+  .redirect {
+    color: blue;
+  }
+  .redirect:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
 `;
 
 export const Input = styled.input`

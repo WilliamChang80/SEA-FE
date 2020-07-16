@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useHistory } from "react-router-dom";
 
 import { LoginFormContainer, Input, Button, Form } from "./style";
 import { loginUrl } from "config/Url";
@@ -13,13 +14,20 @@ const LoginForm = () => {
     setPasswordShown(!passwordShown);
   };
   const { register, handleSubmit, errors, reset } = useForm();
+  const history = useHistory();
+  const setLoginInformation = (data) => {
+    window.localStorage.setItem("accessToken", data.token);
+    window.localStorage.setItem("username", data.user.username);
+    window.localStorage.setItem("userId", data.user.id);
+    history.push("/");
+  };
 
   const onSubmit = (data) => {
     axios
       .post(loginUrl, data)
       .then((res) => {
         res.data.code === 200
-          ? window.localStorage.setItem("accessToken", res.data.data.token)
+          ? setLoginInformation(res.data.data)
           : toast.error(res.data.message);
       })
       .catch((e) => toast.error(e.message));
@@ -66,7 +74,13 @@ const LoginForm = () => {
             <Button type="submit">Login</Button>
           </Form>
           <div className="card-submenu">
-            Not having account? Register <a href="/register">here</a>
+            Not having account? Register{" "}
+            <span
+              className="redirect"
+              onClick={() => history.push("/register")}
+            >
+              here
+            </span>
           </div>
         </div>
       </div>

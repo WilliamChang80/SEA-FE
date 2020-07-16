@@ -28,8 +28,7 @@ const Card = ({
         <div className="card-container">
           {isEditing && <div className="card-action">{renderAction()}</div>}
           <div className="card-title">{title}</div>
-          <img className="card-image" src={image}></img>
-
+          <img className="card-image" alt="product" src={image}></img>
           <div className="card-inline">
             <div className="fa fa-user-circle" />
             <div className="card-owner"> {owner}</div>
