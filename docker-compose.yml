@@ -1,0 +1,12 @@
+version: "2.2"
+
+services:
+  sea-fe:
+    container_name: sea-fe
+    image: williamchang80/sea-fe:1.1
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3021:3000"
+    stdin_open: true
