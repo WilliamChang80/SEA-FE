@@ -1,6 +1,34 @@
 version: "2.2"
-
 services:
+  postgres:
+    container_name: postgres
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=sea
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    networks:
+      - java_network
+  sea-be:
+    container_name: sea-be
+    ports:
+      - 8080:8080
+    image: williamchang80/sea-be:1.1
+    environment:
+      - spring.datasource.url=jdbc:postgresql://postgres:5432/sea
+      - spring.datasource.username=postgres
+      - spring.datasource.password=root
+      - spring.jpa.hibernate.ddl-auto=update
+      - server.port=8080
+    depends_on:
+      - postgres
+    networks:
+      - java_network
+
   sea-fe:
     container_name: sea-fe
     image: williamchang80/sea-fe:1.1
@@ -8,5 +36,13 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "3021:3000"
+      - 80:80
     stdin_open: true
+    depends_on:
+      - sea-be
+    networks:
+      - java_network
+
+networks:
+  java_network:
+    name: java_network

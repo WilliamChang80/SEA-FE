@@ -8,7 +8,7 @@ import { Input, Button, Form } from "components/login/style";
 import { FormContainer } from "components/form/style";
 import Navbar from "components/navbar/index";
 import { useState } from "react";
-import { createItemUrl, getAllCategories } from "config/Url";
+import { createItemUrl, getAllCategoriesUrl } from "config/Url";
 
 const CreateItemPage = () => {
   const { register, handleSubmit, errors, reset } = useForm();
@@ -19,7 +19,7 @@ const CreateItemPage = () => {
 
   useState(() => {
     axios
-      .get(getAllCategories, {
+      .get(getAllCategoriesUrl, {
         headers: {
           Authorization: `Bearer ${window.localStorage.getItem("accessToken")}`
         }

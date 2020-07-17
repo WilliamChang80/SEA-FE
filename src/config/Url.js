@@ -13,5 +13,6 @@ export const getItemsByUserIdUrl = (userId) =>
 export const getItemsByCategoryIdUrl = (categoryId) =>
   `${serverUrl}/items/category/${categoryId}`;
 export const getItemsByIdUrl = (id) => `${serverUrl}/item/${id}`;
-export const updateUser = (id) => `${serverUrl}/user/${id}`;
-export const getAllCategories = `${serverUrl}/categories`;
+export const updateUserUrl = (id) => `${serverUrl}/user/${id}`;
+export const getAllCategoriesUrl = `${serverUrl}/categories`;
+export const getAllUsersUrl = `${serverUrl}/users`;

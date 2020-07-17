@@ -58,4 +58,28 @@ export const HomeContainer = styled.div`
     font-weight: bold;
     font-size: 3rem;
   }
+  option[value=""][disabled] {
+    display: none;
+  }
+  .page-filter {
+    font-size: 2rem;
+    font-family: "Montserrat";
+    display: flex;
+    justify-content: center;
+  }
+  select {
+    margin: 2rem;
+    width: 30%;
+    border-radius: 2rem;
+    padding: 0 1rem;
+  }
+  select:hover {
+    cursor: pointer;
+  }
+  select:focus {
+    border: none;
+  }
+  .button-reset {
+    background-color: orange;
+  }
 `;

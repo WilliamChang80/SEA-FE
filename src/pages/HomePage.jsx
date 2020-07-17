@@ -11,44 +11,61 @@ import {
   getAllItemsUrl,
   getItemsByUserIdUrl,
   getItemsByCategoryIdUrl,
-  deleteItemUrl
+  deleteItemUrl,
+  getAllCategoriesUrl,
+  getAllUsersUrl
 } from "config/Url";
+import { Button } from "components/error/style";
 import App from "config/App";
+
 const { appUrl } = App;
 
 const HomePage = () => {
-  const [items, setItems] = useState([
-    {
-      id: 1,
-      name: "ASUS",
-      description: "This is ASUS",
-      category: {
-        id: 1,
-        createdAt: "2020-07-17T05:21:42.456+00:00",
-        updatedAt: "2020-07-17T05:21:42.456+00:00",
-        name: null
-      },
-      price: 500000,
-      user: {
-        id: 1,
-        username: "1236"
-      }
-    }
-  ]);
+  const [data, setDatas] = useState({
+    items: [],
+    categories: [],
+    users: []
+  });
+  const [selectedItem, setSelectedItem] = useState({ category: "", user: "" });
   const imageUrl = `${appUrl}/Images/Item.jpg`;
   useEffect(() => {
-    axios
-      .get(getAllItemsUrl, {
-        headers: {
-          Authorization: `Bearer ${window.localStorage.getItem("accessToken")}`
-        }
-      })
-      .then((res) => setItems(res.data.data))
-      .catch((e) => toast.error(e.message));
-  });
+    const getData = async () => {
+      const itemList = await axios
+        .get(getAllItemsUrl, {
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem(
+              "accessToken"
+            )}`
+          }
+        })
+        .then((res) => res.data.data);
+      const categoryList = await axios
+        .get(getAllCategoriesUrl, {
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem(
+              "accessToken"
+            )}`
+          }
+        })
+        .then((res) => res.data.data)
+        .catch((e) => toast.error(e.message));
+      const userList = await axios
+        .get(getAllUsersUrl, {
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem(
+              "accessToken"
+            )}`
+          }
+        })
+        .then((res) => res.data.data)
+        .catch((e) => toast.error(e.message));
+      setDatas({ items: itemList, categories: categoryList, users: userList });
+    };
+    getData();
+  }, []);
 
   const renderItems = () => {
-    return !!items.length ? renderCards() : <Spinner />;
+    return !!data.items ? renderCards() : <Spinner />;
   };
 
   const buyItems = (itemId, userId) => {
@@ -80,9 +97,10 @@ const HomePage = () => {
   const renderCards = () => {
     return (
       <div className="item-container">
-        {items.map((item) => (
+        {data.items.map((item) => (
           <div className="buy" key={item.id}>
-            {renderBuyButton(item.id, item.user.id)}
+            {item.user.id !== Number(window.localStorage.getItem("userId")) &&
+              renderBuyButton(item.id, item.user.id)}
             <Card
               title={item.name}
               image={imageUrl}
@@ -96,11 +114,80 @@ const HomePage = () => {
       </div>
     );
   };
+
+  const filterByCategory = (e) => {
+    const categoryId = e.target.value;
+    setSelectedItem({ category: categoryId, user: "" });
+    axios
+      .get(getItemsByCategoryIdUrl(categoryId), {
+        headers: {
+          Authorization: `Bearer ${window.localStorage.getItem("accessToken")}`
+        }
+      })
+      .then((res) => setDatas({ ...data, items: res.data.data }))
+      .catch((e) => toast.error(e.message));
+  };
+
+  const filterByUser = (e) => {
+    const userId = e.target.value;
+    setSelectedItem({ user: userId, category: "" });
+    axios
+      .get(getItemsByUserIdUrl(userId), {
+        headers: {
+          Authorization: `Bearer ${window.localStorage.getItem("accessToken")}`
+        }
+      })
+      .then((res) => setDatas({ ...data, items: res.data.data }))
+      .catch((e) => toast.error(e.message));
+  };
+
+  const resetFilters = () => {
+    setSelectedItem({ category: "", user: "" });
+    axios
+      .get(getAllItemsUrl, {
+        headers: {
+          Authorization: `Bearer ${window.localStorage.getItem("accessToken")}`
+        }
+      })
+      .then((res) => setDatas({ ...data, items: res.data.data }))
+      .catch((e) => toast.error(e.message));
+  };
+
+  const renderFilter = () => {
+    return (
+      <div className="page-filter">
+        <select value={selectedItem.category} onChange={filterByCategory}>
+          <option value="" disabled>
+            Select Item By Category
+          </option>
+          {data.categories.map((category) => (
+            <option value={category.id} key={category.name}>
+              {category.name}
+            </option>
+          ))}
+        </select>
+        <select value={selectedItem.user} onChange={filterByUser}>
+          <option value="" disabled>
+            Select Item By User
+          </option>
+          {data.users.map((user) => (
+            <option value={user.id} key={user.name}>
+              {user.name}
+            </option>
+          ))}
+        </select>
+        <Button className="button-reset" onClick={() => resetFilters()}>
+          Reset Filters
+        </Button>
+      </div>
+    );
+  };
   return (
     <HomeContainer>
       <Navbar />
       <div className="page-container">
         <div className="page-title">Home</div>
+        {renderFilter()}
         {renderItems()}
       </div>
     </HomeContainer>
