@@ -22,7 +22,18 @@ const { appUrl } = App;
 
 const HomePage = () => {
   const [data, setDatas] = useState({
-    items: [],
+    items: [
+      {
+        name: "test",
+        user: { id: 1, name: "User1" },
+        category: { id: 1, name: "VGA" }
+      },
+      {
+        name: "tests",
+        user: { id: 2, name: "User2" },
+        category: { id: 1, name: "VGA" }
+      }
+    ],
     categories: [],
     users: []
   });
@@ -99,8 +110,13 @@ const HomePage = () => {
       <div className="item-container">
         {data.items.map((item) => (
           <div className="buy" key={item.id}>
-            {item.user.id !== Number(window.localStorage.getItem("userId")) &&
-              renderBuyButton(item.id, item.user.id)}
+            {item.user.id !== Number(window.localStorage.getItem("userId")) ? (
+              renderBuyButton(item.id, item.user.id)
+            ) : (
+              <div className="action-buy none">
+                <div className="fa fa-ban" /> Unable to Buy
+              </div>
+            )}
             <Card
               title={item.name}
               image={imageUrl}
@@ -171,8 +187,8 @@ const HomePage = () => {
             Select Item By User
           </option>
           {data.users.map((user) => (
-            <option value={user.id} key={user.name}>
-              {user.name}
+            <option value={user.id} key={user.username}>
+              {user.username}
             </option>
           ))}
         </select>

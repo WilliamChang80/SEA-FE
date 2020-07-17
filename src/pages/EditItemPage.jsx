@@ -8,21 +8,34 @@ import { Input, Button, Form } from "components/login/style";
 import { FormContainer } from "components/form/style";
 import Navbar from "components/navbar/index";
 import { useState } from "react";
-import { createItemUrl, getAllCategoriesUrl } from "config/Url";
+import {
+  getItemsByIdUrl,
+  getAllCategoriesUrl,
+  updateItemUrl
+} from "config/Url";
 import { useEffect } from "react";
 
-const CreateItemPage = () => {
+const EditItemPage = ({ itemId }) => {
   const { register, handleSubmit, errors, reset } = useForm();
-  const [category, setCategory] = useState([]);
+  const [item, setItem] = useState();
+  const [category, setCategory] = useState();
 
   useEffect(() => {
     axios
-      .get(getAllCategoriesUrl, {
+      .get(getItemsByIdUrl(itemId), {
         headers: {
           Authorization: `Bearer ${window.localStorage.getItem("accessToken")}`
         }
       })
-      .then((res) => setCategory(res.data.data))
+      .then((res) => res.data.data)
+      .then((res) =>
+        setItem({
+          name: res.name,
+          description: res.description,
+          categoryId: res.categoryId,
+          price: res.price
+        })
+      )
       .catch((e) => toast.error(e.message));
   });
 
@@ -37,7 +50,7 @@ const CreateItemPage = () => {
       userId: Number(window.localStorage.getItem("userId"))
     };
     axios
-      .post(createItemUrl, data, {
+      .post(updateItemUrl(item.id), data, {
         headers: {
           Authorization: `Bearer ${window.localStorage.getItem("accessToken")}`
         }
@@ -58,7 +71,11 @@ const CreateItemPage = () => {
 
   const renderCategoryForm = () => {
     return (
-      <select name="category" ref={register({ required: true })}>
+      <select
+        name="category"
+        ref={register({ required: true })}
+        value={item.categoryId}
+      >
         {category.map((cat) => (
           <option value={cat.id} key={cat.id}>
             {cat.name}
@@ -85,6 +102,7 @@ const CreateItemPage = () => {
             placeholder="Enter item name"
             className="form-name"
             name="name"
+            value={item.name}
             ref={register({ required: true })}
           />
           <div className="field-container">
@@ -101,6 +119,7 @@ const CreateItemPage = () => {
             placeholder="Enter item price"
             className="form-price"
             name="price"
+            value={item.price}
             ref={register({
               required: true,
               validate: (value) => /^[0-9]*$/.test(value)
@@ -117,6 +136,7 @@ const CreateItemPage = () => {
             placeholder="Enter item description"
             className="form-desc"
             name="description"
+            value={item.description}
             ref={register({ required: true })}
           />
           <div className="form-sub">Item Category</div>
@@ -128,4 +148,4 @@ const CreateItemPage = () => {
   );
 };
 
-export default CreateItemPage;
+export default EditItemPage;

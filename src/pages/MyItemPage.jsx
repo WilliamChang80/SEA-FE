@@ -15,21 +15,7 @@ import Modal from "components/modal";
 const { appUrl } = App;
 
 const MyItemPage = () => {
-  const [items, setItems] = useState([
-    {
-      name: "test",
-      description: "Desc",
-      price: 5000,
-      user: {
-        id: 1,
-        username: "User"
-      },
-      category: {
-        id: 1,
-        name: "VGA"
-      }
-    }
-  ]);
+  const [items, setItems] = useState();
 
   const [isEditing, setIsEditing] = useState(false);
 
@@ -88,9 +74,12 @@ const MyItemPage = () => {
     );
   };
 
-  const editActions = () => {
+  const editActions = (id) => {
     return (
-      <div className="action-edit">
+      <div
+        className="action-edit"
+        onClick={() => history.push("/edit", { id: id })}
+      >
         <div className="fa fa-edit"></div> Edit
       </div>
     );
@@ -119,7 +108,7 @@ const MyItemPage = () => {
               <Card
                 title={item.name}
                 image={imageUrl}
-                actions={[deleteActions(item.id), editActions()]}
+                actions={[deleteActions(item.id), editActions(item.id)]}
                 description={item.description}
                 price={item.price}
                 owner={item.user.username}

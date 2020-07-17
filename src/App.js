@@ -6,8 +6,9 @@ import LoginPage from "pages/LoginPage";
 import ErrorPage from "pages/ErrorPage";
 import HomePage from "pages/HomePage";
 import MyItemPage from "pages/MyItemPage";
-import RegisterForm from "components/register";
+import RegisterPage from "pages/RegisterPage";
 import CreateItemPage from "pages/CreateItemPage";
+import EditItemPage from "pages/EditItemPage";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../node_modules/font-awesome/css/font-awesome.css";
@@ -23,10 +24,11 @@ function App() {
       <BrowserRouter>
         <Switch>
           <Route exact path="/login" component={LoginPage} />
-          <Route exact path="/register" component={RegisterForm} />
+          <Route exact path="/register" component={RegisterPage} />
           <Route exact path="/" component={HomePage} />
           <Route exact path="/my-item" component={MyItemPage} />
           <Route exact path="/item/add" component={CreateItemPage} />
+          <Route exact path="/item/edit" component={EditItemPage} />
           <Route
             path="*"
             render={() => (

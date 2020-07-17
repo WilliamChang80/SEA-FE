@@ -82,4 +82,11 @@ export const HomeContainer = styled.div`
   .button-reset {
     background-color: orange;
   }
+  .none:hover {
+    cursor: default !important;
+    color: red;
+  }
+  .none {
+    color: red;
+  }
 `;
