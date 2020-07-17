@@ -21,6 +21,7 @@ const Navbar = () => {
   const contentList = [
     { name: "fa fa-user", action: () => history.push("/profile") },
     { name: "fa fa-home", action: () => history.push("/") },
+    { name: "fa fa-archive", action: () => history.push("/my-item") },
     { name: "fa fa-sign-out", action: () => toggleModal() }
   ];
   return (

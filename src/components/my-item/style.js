@@ -21,6 +21,9 @@ export const MyItemPageContainer = styled.div`
     opacity: 0.8;
     cursor: pointer;
   }
+  .btn-add {
+    background-color: green;
+  }
 `;
 export const Button = styled.button`
   font-family: "Montserrat";

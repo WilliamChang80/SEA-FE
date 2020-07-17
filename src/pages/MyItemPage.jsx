@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useHistory } from "react-router-dom";
 
 import { MyItemPageContainer, Button } from "components/my-item/style";
 import { getItemsByUserIdUrl, deleteItemUrl } from "config/Url";
@@ -14,13 +15,29 @@ import Modal from "components/modal";
 const { appUrl } = App;
 
 const MyItemPage = () => {
-  const [items, setItems] = useState();
+  const [items, setItems] = useState([
+    {
+      name: "test",
+      description: "Desc",
+      price: 5000,
+      user: {
+        id: 1,
+        username: "User"
+      },
+      category: {
+        id: 1,
+        name: "VGA"
+      }
+    }
+  ]);
 
   const [isEditing, setIsEditing] = useState(false);
 
   const [isOpenedModal, setOpenedModal] = useState(false);
 
   const imageUrl = `${appUrl}/Images/Item.jpg`;
+
+  const history = useHistory();
 
   const toggleModal = () => {
     setOpenedModal(!isOpenedModal);
@@ -45,7 +62,7 @@ const MyItemPage = () => {
       })
       .then(
         (res) =>
-          res.data.data.code === 200 &&
+          res.data.code === 200 &&
           toast.success("Item Has Successfully Deleted")
       )
       .catch((e) => toast.error(e.message));
@@ -92,6 +109,9 @@ const MyItemPage = () => {
       <React.Fragment>
         <Button onClick={() => toggleEditing()}>
           {isEditing ? "View Items" : "Edit Items"}
+        </Button>
+        <Button onClick={() => history.push("/item/add")} className="btn-add">
+          Add Item
         </Button>
         <div className="item-container">
           {items.map((item) => (
