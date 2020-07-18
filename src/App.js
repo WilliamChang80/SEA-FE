@@ -9,6 +9,7 @@ import MyItemPage from "pages/MyItemPage";
 import RegisterPage from "pages/RegisterPage";
 import CreateItemPage from "pages/CreateItemPage";
 import EditItemPage from "pages/EditItemPage";
+import UpdateProfilePage from "pages/UpdateProfilePage";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../node_modules/font-awesome/css/font-awesome.css";
@@ -29,6 +30,7 @@ function App() {
           <Route exact path="/my-item" component={MyItemPage} />
           <Route exact path="/item/add" component={CreateItemPage} />
           <Route exact path="/item/edit" component={EditItemPage} />
+          <Route exect path="/profile" component={UpdateProfilePage} />
           <Route
             path="*"
             render={() => (

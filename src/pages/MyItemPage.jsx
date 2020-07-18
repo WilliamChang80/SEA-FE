@@ -19,13 +19,7 @@ import Modal from "components/modal";
 const { appUrl } = App;
 
 const MyItemPage = () => {
-  const [items, setItems] = useState([
-    {
-      id: 1,
-      user: { id: 1, username: "test" },
-      category: { id: 2, name: "123 " }
-    }
-  ]);
+  const [items, setItems] = useState();
 
   const [isEditing, setIsEditing] = useState(false);
 

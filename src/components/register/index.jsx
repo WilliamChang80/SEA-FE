@@ -80,7 +80,6 @@ const RegisterForm = () => {
                 (errors.passwordConfirm?.type === "validate" && (
                   <div className="error-message">Password must be same</div>
                 ))}
-
               <Button type="submit">Submit</Button>
             </Form>
             <div className="card-submenu">

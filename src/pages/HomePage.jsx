@@ -69,6 +69,7 @@ const HomePage = () => {
   };
 
   const buyItems = (itemId, userId) => {
+    console.log(itemId);
     userId === window.localStorage.getItem("userId")
       ? toast.error("Cannot buy your own item")
       : axios
