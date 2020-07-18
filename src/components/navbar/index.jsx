@@ -17,12 +17,17 @@ const Navbar = () => {
     localStorage.clear();
     history.push("/login");
   };
-
+  const username = window.localStorage.getItem("username");
   const contentList = [
-    { name: "fa fa-user", action: () => history.push("/profile") },
+    {
+      name: "fa fa-user",
+      action: () => history.push("/profile")
+    },
     { name: "fa fa-home", action: () => history.push("/") },
-    { name: "fa fa-archive", action: () => history.push("/my-item") },
-    { name: "fa fa-sign-out", action: () => toggleModal() }
+    {
+      name: "fa fa-archive",
+      action: () => history.push("/my-item")
+    }
   ];
   return (
     <NavbarContainer>
@@ -79,6 +84,12 @@ const Navbar = () => {
         {contentList.map((content, index) => (
           <NavbarMenu name={content.name} action={content.action} key={index} />
         ))}
+        <div className="right-container">
+          <div className="username">Hello, {username}</div>
+          <div className="sign-out" onClick={() => toggleModal()}>
+            Sign Out
+          </div>
+        </div>
       </div>
     </NavbarContainer>
   );
