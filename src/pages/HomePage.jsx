@@ -22,18 +22,7 @@ const { appUrl } = App;
 
 const HomePage = () => {
   const [data, setDatas] = useState({
-    items: [
-      {
-        name: "test",
-        user: { id: 1, name: "User1" },
-        category: { id: 1, name: "VGA" }
-      },
-      {
-        name: "tests",
-        user: { id: 2, name: "User2" },
-        category: { id: 1, name: "VGA" }
-      }
-    ],
+    items: [],
     categories: [],
     users: []
   });

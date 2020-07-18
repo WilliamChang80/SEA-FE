@@ -4,7 +4,11 @@ import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 
 import { MyItemPageContainer, Button } from "components/my-item/style";
-import { getItemsByUserIdUrl, deleteItemUrl } from "config/Url";
+import {
+  getItemsByUserIdUrl,
+  deleteItemUrl,
+  getItemsByIdUrl
+} from "config/Url";
 import Indicator from "components/indicator";
 import Card from "components/card";
 import Spinner from "components/spinner";
@@ -15,7 +19,13 @@ import Modal from "components/modal";
 const { appUrl } = App;
 
 const MyItemPage = () => {
-  const [items, setItems] = useState();
+  const [items, setItems] = useState([
+    {
+      id: 1,
+      user: { id: 1, username: "test" },
+      category: { id: 2, name: "123 " }
+    }
+  ]);
 
   const [isEditing, setIsEditing] = useState(false);
 
@@ -76,13 +86,26 @@ const MyItemPage = () => {
 
   const editActions = (id) => {
     return (
-      <div
-        className="action-edit"
-        onClick={() => history.push("/edit", { id: id })}
-      >
+      <div className="action-edit" onClick={() => redirectWithState(id)}>
         <div className="fa fa-edit"></div> Edit
       </div>
     );
+  };
+
+  const redirectWithState = (itemId) => {
+    axios
+      .get(getItemsByIdUrl(itemId), {
+        headers: {
+          Authorization: `Bearer ${window.localStorage.getItem("accessToken")}`
+        }
+      })
+      .then((res) => res.data.data)
+      .then((res) =>
+        !!res.id
+          ? history.push("/item/edit", { ...res })
+          : toast.error("Sorry, looks like your item cannot be found")
+      )
+      .catch((e) => toast.error(e.message));
   };
 
   const toggleEditing = () => {

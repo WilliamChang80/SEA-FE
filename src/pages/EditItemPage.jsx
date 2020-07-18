@@ -8,38 +8,32 @@ import { Input, Button, Form } from "components/login/style";
 import { FormContainer } from "components/form/style";
 import Navbar from "components/navbar/index";
 import { useState } from "react";
-import {
-  getItemsByIdUrl,
-  getAllCategoriesUrl,
-  updateItemUrl
-} from "config/Url";
+import { getAllCategoriesUrl, updateItemUrl } from "config/Url";
 import { useEffect } from "react";
 
-const EditItemPage = ({ itemId }) => {
-  const { register, handleSubmit, errors, reset } = useForm();
-  const [item, setItem] = useState();
-  const [category, setCategory] = useState();
-
+const EditItemPage = () => {
+  const history = useHistory();
+  const data = history.location.state;
+  const { register, handleSubmit, errors, reset } = useForm({
+    defaultValues: {
+      name: data.name,
+      price: data.price,
+      description: data.description,
+      category: data.category.id
+    }
+  });
+  const [category, setCategory] = useState([]);
+  const [itemId] = useState([history.location.state.id]);
   useEffect(() => {
     axios
-      .get(getItemsByIdUrl(itemId), {
+      .get(getAllCategoriesUrl, {
         headers: {
           Authorization: `Bearer ${window.localStorage.getItem("accessToken")}`
         }
       })
-      .then((res) => res.data.data)
-      .then((res) =>
-        setItem({
-          name: res.name,
-          description: res.description,
-          categoryId: res.categoryId,
-          price: res.price
-        })
-      )
+      .then((res) => setCategory(res.data.data))
       .catch((e) => toast.error(e.message));
-  });
-
-  const history = useHistory();
+  }, []);
 
   const onSubmit = (result) => {
     const data = {
@@ -50,16 +44,12 @@ const EditItemPage = ({ itemId }) => {
       userId: Number(window.localStorage.getItem("userId"))
     };
     axios
-      .post(updateItemUrl(item.id), data, {
+      .put(updateItemUrl(itemId), data, {
         headers: {
           Authorization: `Bearer ${window.localStorage.getItem("accessToken")}`
         }
       })
-      .then((res) =>
-        res.data.code === 200
-          ? redirectToItemPage("Success Added Item")
-          : toast.error(res.data.data.message)
-      )
+      .then(redirectToItemPage("Success Updated Item"))
       .catch((e) => toast.error(e.message));
     reset();
   };
@@ -71,11 +61,7 @@ const EditItemPage = ({ itemId }) => {
 
   const renderCategoryForm = () => {
     return (
-      <select
-        name="category"
-        ref={register({ required: true })}
-        value={item.categoryId}
-      >
+      <select name="category" ref={register({ required: true })}>
         {category.map((cat) => (
           <option value={cat.id} key={cat.id}>
             {cat.name}
@@ -89,7 +75,7 @@ const EditItemPage = ({ itemId }) => {
     <FormContainer>
       <Navbar />
       <div className="form-container">
-        <div className="form-title">Create Item</div>
+        <div className="form-title">Edit Item</div>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <div className="field-container">
             <div className="form-sub">Item Name</div>
@@ -102,7 +88,6 @@ const EditItemPage = ({ itemId }) => {
             placeholder="Enter item name"
             className="form-name"
             name="name"
-            value={item.name}
             ref={register({ required: true })}
           />
           <div className="field-container">
@@ -119,7 +104,6 @@ const EditItemPage = ({ itemId }) => {
             placeholder="Enter item price"
             className="form-price"
             name="price"
-            value={item.price}
             ref={register({
               required: true,
               validate: (value) => /^[0-9]*$/.test(value)
@@ -136,7 +120,6 @@ const EditItemPage = ({ itemId }) => {
             placeholder="Enter item description"
             className="form-desc"
             name="description"
-            value={item.description}
             ref={register({ required: true })}
           />
           <div className="form-sub">Item Category</div>
