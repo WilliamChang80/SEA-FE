@@ -84,11 +84,15 @@ const HomePage = () => {
               )}`
             }
           })
-          .then(
-            (res) =>
-              res.data.code === 200 && toast.success("Success Bought Item")
-          )
+          .then((res) => res.data.code === 200 && removeItem(itemId))
           .catch((e) => toast.error(e.message));
+    toggleModal();
+  };
+
+  const removeItem = (itemId) => {
+    const itemList = data.items.filter((item) => item.id !== itemId);
+    toast.success("Successfully bought item");
+    setDatas({ ...data, items: itemList });
   };
 
   const renderBuyButton = () => {
