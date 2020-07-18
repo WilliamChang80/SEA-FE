@@ -17,6 +17,7 @@ import {
 } from "config/Url";
 import { Button } from "components/error/style";
 import App from "config/App";
+import Modal from "components/modal";
 
 const { appUrl } = App;
 
@@ -27,6 +28,10 @@ const HomePage = () => {
     users: []
   });
   const [selectedItem, setSelectedItem] = useState({ category: "", user: "" });
+  const [isOpenedModal, setOpenedModal] = useState(false);
+  const toggleModal = () => {
+    setOpenedModal(!isOpenedModal);
+  };
   const imageUrl = `${appUrl}/Images/Item.jpg`;
   useEffect(() => {
     const getData = async () => {
@@ -69,7 +74,6 @@ const HomePage = () => {
   };
 
   const buyItems = (itemId, userId) => {
-    console.log(itemId);
     userId === window.localStorage.getItem("userId")
       ? toast.error("Cannot buy your own item")
       : axios
@@ -87,9 +91,9 @@ const HomePage = () => {
           .catch((e) => toast.error(e.message));
   };
 
-  const renderBuyButton = (itemId, userId) => {
+  const renderBuyButton = () => {
     return (
-      <div className="action-buy" onClick={() => buyItems(itemId, userId)}>
+      <div className="action-buy" onClick={() => toggleModal()}>
         <div className="fa fa-money" /> Buy Item
       </div>
     );
@@ -101,7 +105,10 @@ const HomePage = () => {
         {data.items.map((item) => (
           <div className="buy" key={item.id}>
             {item.user.id !== Number(window.localStorage.getItem("userId")) ? (
-              renderBuyButton(item.id, item.user.id)
+              <div>
+                {renderBuyModal(item.user, { id: item.id, name: item.name })}
+                {renderBuyButton()}
+              </div>
             ) : (
               <div className="action-buy none">
                 <div className="fa fa-ban" /> Unable to Buy
@@ -157,6 +164,18 @@ const HomePage = () => {
       })
       .then((res) => setDatas({ ...data, items: res.data.data }))
       .catch((e) => toast.error(e.message));
+  };
+
+  const renderBuyModal = (user, item) => {
+    return (
+      <Modal
+        title={"Buy Item"}
+        onSubmitAction={() => buyItems(item.id, user.id)}
+        confirmation={`Are you sure you want to buy ${item.name} from ${user.username}? `}
+        toggleModal={toggleModal}
+        isOpenedModal={isOpenedModal}
+      />
+    );
   };
 
   const renderFilter = () => {

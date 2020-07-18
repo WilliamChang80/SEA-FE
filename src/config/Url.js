@@ -16,3 +16,4 @@ export const getItemsByIdUrl = (id) => `${serverUrl}/item/${id}`;
 export const updateUserUrl = (id) => `${serverUrl}/user/${id}`;
 export const getAllCategoriesUrl = `${serverUrl}/categories`;
 export const getAllUsersUrl = `${serverUrl}/users`;
+export const verifyUserUrl = `${serverUrl}/verify`;

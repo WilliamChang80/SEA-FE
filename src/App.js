@@ -10,6 +10,7 @@ import RegisterPage from "pages/RegisterPage";
 import CreateItemPage from "pages/CreateItemPage";
 import EditItemPage from "pages/EditItemPage";
 import UpdateProfilePage from "pages/UpdateProfilePage";
+import ProtectedRoute from "components/protected-route";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../node_modules/font-awesome/css/font-awesome.css";
@@ -26,11 +27,11 @@ function App() {
         <Switch>
           <Route exact path="/login" component={LoginPage} />
           <Route exact path="/register" component={RegisterPage} />
-          <Route exact path="/" component={HomePage} />
-          <Route exact path="/my-item" component={MyItemPage} />
-          <Route exact path="/item/add" component={CreateItemPage} />
-          <Route exact path="/item/edit" component={EditItemPage} />
-          <Route exect path="/profile" component={UpdateProfilePage} />
+          <ProtectedRoute exact path="/" component={HomePage} />
+          <ProtectedRoute path="/my-item" component={MyItemPage} />
+          <ProtectedRoute exact path="/item/add" component={CreateItemPage} />
+          <ProtectedRoute exact path="/item/edit" component={EditItemPage} />
+          <ProtectedRoute exact path="/profile" component={UpdateProfilePage} />
           <Route
             path="*"
             render={() => (

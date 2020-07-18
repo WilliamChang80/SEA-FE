@@ -25,7 +25,7 @@ const RegisterForm = () => {
       .post(registerUrl, data)
       .then((res) =>
         res.data.code === 200
-          ? redirectUrl(res.data.message)
+          ? redirectUrl("Successfully Registered!")
           : toast.error(res.data.message)
       )
       .catch((e) => toast.error(e));
