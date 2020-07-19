@@ -32,7 +32,6 @@ export const LoginFormContainer = styled.div`
     justify-content: center;
     align-items: center;
     height: 100vh;
-
     overflow-x: none;
     background-image: url(${`${appUrl}/Images/ErrorPage.jpg`});
     width: 98.9vw;
