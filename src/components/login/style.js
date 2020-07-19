@@ -1,5 +1,7 @@
 import styled from "styled-components";
+import App from "config/App";
 
+const { appUrl } = App;
 export const LoginFormContainer = styled.div`
   .card-container {
     display: flex;
@@ -30,6 +32,15 @@ export const LoginFormContainer = styled.div`
     justify-content: center;
     align-items: center;
     height: 100vh;
+
+    overflow-x: none;
+    background-image: url(${`${appUrl}/Images/ErrorPage.jpg`});
+    width: 98.9vw;
+    height: 119vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
   }
   .toggle-password {
     color: black;
