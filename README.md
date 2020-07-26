@@ -1,6 +1,6 @@
 # Find Computer
 
-A web based project for Software Engineering Academy assignment. The website can be accessed in [here](http://54.255.226.109/login)
+A web based project for Software Engineering Academy assignment. The website can be accessed in [here](http://13.250.27.196/login)
 
 ## Preview
 
